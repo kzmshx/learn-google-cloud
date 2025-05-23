@@ -1,8 +1,8 @@
 resource "google_compute_instance" "terraform" {
-  project = ""
+  project = "qwiklabs-gcp-02-dd8d884de884"
   name = "terraform"
   machine_type = "e2-medium"
-  zone = ""
+  zone = "us-central1-f"
 
   boot_disk {
     initialize_params {
@@ -12,6 +12,6 @@ resource "google_compute_instance" "terraform" {
 
   network_interface {
     network = "default"
-    access_config {   }
+    access_config {}
   }
 }
