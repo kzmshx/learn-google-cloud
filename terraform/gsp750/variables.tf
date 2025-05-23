@@ -12,3 +12,8 @@ variable "zone" {
   description = "GCPのゾーン"
   type        = string
 }
+
+variable "example_bucket_name" {
+  description = "バケット名"
+  type        = string
+}
