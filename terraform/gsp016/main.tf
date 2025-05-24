@@ -1,15 +1,25 @@
 module "network" {
   source  = "terraform-google-modules/network/google"
-  version = "10.0.0"
+  version = "~> 11.0.0"
 
   project_id   = var.project_id
   network_name = var.network_name
 
   subnets = [
-    for s in var.subnets : {
-      subnet_name   = "subnet-${s.region}"
-      subnet_ip     = s.ip
-      subnet_region = s.region
+    {
+      subnet_name   = "subnet-${var.region}"
+      subnet_ip     = "10.0.0.0/16"
+      subnet_region = var.region
+    },
+    {
+      subnet_name   = "subnet-${var.subnet_region_1}"
+      subnet_ip     = "10.1.0.0/16"
+      subnet_region = var.subnet_region_1
+    },
+    {
+      subnet_name   = "subnet-${var.subnet_region_2}"
+      subnet_ip     = "10.2.0.0/16"
+      subnet_region = var.subnet_region_2
     }
   ]
 
@@ -28,7 +38,7 @@ module "network" {
     },
     {
       name          = "nw101-allow-internal"
-      source_ranges = [for s in var.subnets : s.ip]
+      source_ranges = ["10.0.0.0/16", "10.1.0.0/16", "10.2.0.0/16"]
       allow = [
         { protocol = "tcp", ports = ["0-65535"] },
         { protocol = "udp", ports = ["0-65535"] },
@@ -42,9 +52,9 @@ module "network" {
       allow         = [{ protocol = "tcp", ports = ["22"] }]
     },
     {
-      name         = "nw101-allow-rdp"
-      source_range = ["0.0.0.0/0"]
-      allow        = [{ protocol = "tcp", ports = ["3389"] }]
+      name          = "nw101-allow-rdp"
+      source_ranges = ["0.0.0.0/0"]
+      allow         = [{ protocol = "tcp", ports = ["3389"] }]
     }
   ]
 }

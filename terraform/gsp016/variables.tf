@@ -16,11 +16,15 @@ variable "zone" {
 variable "network_name" {
   type        = string
   description = "The name of the network"
+  default     = "taw-custom-network"
 }
 
-variable "subnets" {
-  type = list(object({
-    region = string
-    ip     = string
-  }))
+variable "subnet_region_1" {
+  type        = string
+  description = "The region of the first subnet"
+}
+
+variable "subnet_region_2" {
+  type        = string
+  description = "The region of the second subnet"
 }
