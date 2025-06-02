@@ -9,6 +9,3 @@
 // - env リポジトリの Code Build トリガーを作成
 // - Code Build の SA に GKE へのアクセス権を付与
 // - Code Build の SA に env リポジトリへの書込権限を付与
-// - GKE クラスターを作成
-// - GKE クラスターに app リポジトリからトリガーされる Code Build パイプラインをデプロイ
-// - GKE クラスターに env リポジトリからトリガーされる Code Build パイプラインをデプロイ
