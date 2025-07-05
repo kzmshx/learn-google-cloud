@@ -1,0 +1,110 @@
+graph TB
+    subgraph "Internet"
+        Users[👥 Users]
+        Insurance[🏢 Insurance Companies]
+        NewPartners[🤝 New Partners]
+    end
+
+    subgraph "Google Cloud"
+        subgraph "Frontend & Load Balancing"
+            LB[🌐 Cloud Load Balancer]
+            CDN[📡 Cloud CDN]
+        end
+        
+        subgraph "Application Layer"
+            GKE[⚙️ GKE Cluster<br/>Web Applications]
+            CloudRun[🚀 Cloud Run<br/>APIs & Microservices]
+        end
+        
+        subgraph "Data Layer"
+            CloudSQL[💾 Cloud SQL<br/>MySQL/SQL Server]
+            Firestore[📊 Cloud Firestore<br/>NoSQL Data]
+            Redis[⚡ Memorystore Redis<br/>Cache Layer]
+            Storage[📦 Cloud Storage<br/>Files & Backups]
+        end
+        
+        subgraph "Analytics & ML"
+            BigQuery[📈 BigQuery<br/>Data Warehouse]
+            Dataflow[🔄 Cloud Dataflow<br/>Data Processing]
+            VertexAI[🤖 Vertex AI<br/>ML & Predictions]
+        end
+        
+        subgraph "Security & Management"
+            IAM[🔐 Cloud IAM]
+            KMS[🔑 Cloud KMS]
+            SecretMgr[🔒 Secret Manager]
+        end
+        
+        subgraph "Monitoring & Ops"
+            Monitoring[📊 Cloud Monitoring]
+            Logging[📝 Cloud Logging]
+            Alerting[🚨 Cloud Alerting]
+        end
+    end
+    
+    subgraph "On-Premises"
+        subgraph "Legacy Systems"
+            ActiveDir[🏛️ Active Directory]
+            LegacyApps[💼 Legacy Insurance<br/>Integration Systems]
+            FileSystem[📁 File-based Systems]
+        end
+    end
+    
+    subgraph "Network Connection"
+        Interconnect[🔗 Cloud Interconnect]
+        VPN[🛡️ Cloud VPN<br/>Backup Connection]
+    end
+
+    %% User connections
+    Users --> LB
+    Insurance --> LB
+    NewPartners --> LB
+    
+    %% Frontend flow
+    LB --> CDN
+    CDN --> GKE
+    LB --> CloudRun
+    
+    %% Application to data
+    GKE --> CloudSQL
+    GKE --> Firestore
+    GKE --> Redis
+    CloudRun --> CloudSQL
+    CloudRun --> Firestore
+    CloudRun --> Storage
+    
+    %% Data processing
+    CloudSQL --> Dataflow
+    Firestore --> Dataflow
+    Storage --> Dataflow
+    Dataflow --> BigQuery
+    BigQuery --> VertexAI
+    
+    %% Hybrid connectivity
+    LegacyApps --> Interconnect
+    ActiveDir --> Interconnect
+    FileSystem --> VPN
+    Interconnect --> CloudRun
+    VPN --> CloudRun
+    
+    %% Security
+    IAM -.-> GKE
+    IAM -.-> CloudRun
+    KMS -.-> CloudSQL
+    KMS -.-> Storage
+    SecretMgr -.-> CloudRun
+    
+    %% Monitoring
+    Monitoring -.-> GKE
+    Monitoring -.-> CloudSQL
+    Logging -.-> GKE
+    Logging -.-> CloudRun
+    Alerting -.-> Monitoring
+
+    style Users fill:#e1f5fe
+    style Insurance fill:#f3e5f5
+    style NewPartners fill:#e8f5e8
+    style GKE fill:#fff3e0
+    style CloudSQL fill:#ffebee
+    style BigQuery fill:#e3f2fd
+    style VertexAI fill:#f1f8e9

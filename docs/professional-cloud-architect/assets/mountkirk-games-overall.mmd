@@ -1,0 +1,142 @@
+graph TB
+    subgraph "Global Players"
+        Mobile[📱 Mobile Players<br/>iOS/Android]
+        PC[💻 PC Players<br/>Windows/Mac/Linux]
+        Console[🎮 Console Players<br/>PlayStation/Xbox/Switch]
+        WebPlayers[🌐 Web Players<br/>Browser-based]
+    end
+    
+    subgraph "Global Load Balancing"
+        GlobalLB[🌍 Global Load Balancer<br/>Player Routing]
+        HealthCheck[💓 Health Checks<br/>Server Monitoring]
+    end
+    
+    subgraph "Multi-Region Game Clusters"
+        subgraph "North America - us-central1"
+            NAGKE[⚙️ GKE Autopilot<br/>Game Servers]
+            NAGameServers[🎮 Game Server Pods<br/>Agones Managed]
+            NAMatchmaking[🎯 Open Match<br/>Player Matching]
+        end
+        
+        subgraph "Europe - europe-west1"
+            EUGKE[⚙️ GKE Autopilot<br/>Game Servers]
+            EUGameServers[🎮 Game Server Pods<br/>Agones Managed]
+            EUMatchmaking[🎯 Open Match<br/>Player Matching]
+        end
+        
+        subgraph "Asia Pacific - asia-northeast1"
+            APGKE[⚙️ GKE Autopilot<br/>Game Servers]
+            APGameServers[🎮 Game Server Pods<br/>Agones Managed]
+            APMatchmaking[🎯 Open Match<br/>Player Matching]
+        end
+    end
+    
+    subgraph "Global Data Layer"
+        Spanner[🌐 Cloud Spanner<br/>Global Leaderboard<br/>Multi-region]
+        Firestore[🔥 Cloud Firestore<br/>Player Profiles<br/>Game State]
+        RedisGlobal[⚡ Memorystore Redis<br/>Session Data<br/>Real-time Cache]
+    end
+    
+    subgraph "GPU Rendering & Assets"
+        GPUNodes[🎨 GPU Compute Engine<br/>Server-side Rendering]
+        AssetStorage[📦 Cloud Storage<br/>Game Assets<br/>Multi-regional]
+        CDN[🌐 Cloud CDN<br/>Asset Distribution]
+    end
+    
+    subgraph "Analytics & ML"
+        PubSub[⚡ Cloud Pub/Sub<br/>Game Events]
+        Dataflow[🔄 Cloud Dataflow<br/>Event Processing]
+        BigQuery[📈 BigQuery<br/>Player Analytics]
+        VertexAI[🤖 Vertex AI<br/>Anti-cheat ML<br/>Matchmaking AI]
+    end
+    
+    subgraph "DevOps & CI/CD"
+        CloudBuild[🔨 Cloud Build<br/>Multi-platform Builds]
+        ArtifactRegistry[📦 Artifact Registry<br/>Container Images]
+        CloudDeploy[🚀 Cloud Deploy<br/>Canary Deployments]
+    end
+    
+    subgraph "Monitoring & Operations"
+        Monitoring[📊 Cloud Monitoring<br/>Game Metrics]
+        Logging[📝 Cloud Logging<br/>Game Logs]
+        ErrorReporting[🚨 Error Reporting<br/>Crash Analysis]
+    end
+    
+    %% Player connections
+    Mobile --> GlobalLB
+    PC --> GlobalLB
+    Console --> GlobalLB
+    WebPlayers --> GlobalLB
+    
+    %% Global routing to regions
+    GlobalLB --> NAGKE
+    GlobalLB --> EUGKE
+    GlobalLB --> APGKE
+    HealthCheck --> NAGameServers
+    HealthCheck --> EUGameServers
+    HealthCheck --> APGameServers
+    
+    %% Regional game servers
+    NAGKE --> NAGameServers
+    EUGKE --> EUGameServers
+    APGKE --> APGameServers
+    NAGameServers --> NAMatchmaking
+    EUGameServers --> EUMatchmaking
+    APGameServers --> APMatchmaking
+    
+    %% Global data access
+    NAGameServers --> Spanner
+    EUGameServers --> Spanner
+    APGameServers --> Spanner
+    NAGameServers --> Firestore
+    EUGameServers --> Firestore
+    APGameServers --> Firestore
+    NAGameServers --> RedisGlobal
+    EUGameServers --> RedisGlobal
+    APGameServers --> RedisGlobal
+    
+    %% GPU rendering
+    NAGameServers --> GPUNodes
+    EUGameServers --> GPUNodes
+    APGameServers --> GPUNodes
+    
+    %% Asset delivery
+    AssetStorage --> CDN
+    CDN --> Mobile
+    CDN --> PC
+    CDN --> Console
+    CDN --> WebPlayers
+    
+    %% Analytics pipeline
+    NAGameServers --> PubSub
+    EUGameServers --> PubSub
+    APGameServers --> PubSub
+    PubSub --> Dataflow
+    Dataflow --> BigQuery
+    BigQuery --> VertexAI
+    VertexAI --> NAMatchmaking
+    VertexAI --> EUMatchmaking
+    VertexAI --> APMatchmaking
+    
+    %% CI/CD pipeline
+    CloudBuild --> ArtifactRegistry
+    ArtifactRegistry --> CloudDeploy
+    CloudDeploy --> NAGKE
+    CloudDeploy --> EUGKE
+    CloudDeploy --> APGKE
+    
+    %% Monitoring
+    Monitoring --> NAGKE
+    Monitoring --> EUGKE
+    Monitoring --> APGKE
+    Logging --> NAGameServers
+    Logging --> EUGameServers
+    Logging --> APGameServers
+    ErrorReporting --> Monitoring
+
+    style Mobile fill:#e1f5fe
+    style NAGameServers fill:#fff3e0
+    style Spanner fill:#e8f5e8
+    style BigQuery fill:#e3f2fd
+    style VertexAI fill:#f1f8e9
+    style GlobalLB fill:#fce4ec

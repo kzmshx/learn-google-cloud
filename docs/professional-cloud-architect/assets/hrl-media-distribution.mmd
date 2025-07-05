@@ -1,0 +1,134 @@
+graph TB
+    subgraph "Race Venue Production"
+        A[🎬 Live Video Cameras<br/>4K Multi-angle]
+        B[🎤 Audio Capture<br/>Pilot Communications]
+        C[📡 Mobile Production Unit<br/>On-site Editing]
+        D[🚁 Drone Cameras<br/>Aerial Coverage]
+    end
+    
+    subgraph "Google Cloud - Media Processing"
+        subgraph "Ingestion Layer"
+            E[📤 Live Stream Ingestion<br/>RTMP/WebRTC]
+            F[🔄 Transcoder API<br/>Live Encoding]
+            G[📦 Cloud Storage<br/>Raw Media Archive]
+        end
+        
+        subgraph "Processing Layer"
+            H[🎬 Multi-bitrate Encoding<br/>Adaptive Streaming]
+            I[🎨 Graphics Overlay<br/>Live Statistics]
+            J[🔧 Content Enhancement<br/>AI-powered Editing]
+            K[📱 Mobile Optimization<br/>Format Conversion]
+        end
+        
+        subgraph "Distribution Layer"
+            L[🌐 Cloud CDN<br/>Global Content Delivery]
+            M[📡 Media CDN<br/>Video-optimized]
+            N[⚡ Edge Caching<br/>Regional PoPs]
+        end
+    end
+    
+    subgraph "Global Distribution Points"
+        subgraph "North America"
+            O[🇺🇸 US East Edge<br/>New York]
+            P[🇺🇸 US West Edge<br/>Los Angeles]
+            Q[🇨🇦 Canada Edge<br/>Toronto]
+        end
+        
+        subgraph "Europe"
+            R[🇬🇧 UK Edge<br/>London]
+            S[🇩🇪 Germany Edge<br/>Frankfurt]
+            T[🇫🇷 France Edge<br/>Paris]
+        end
+        
+        subgraph "Asia Pacific"
+            U[🇯🇵 Japan Edge<br/>Tokyo]
+            V[🇸🇬 Singapore Edge<br/>APAC Hub]
+            W[🇦🇺 Australia Edge<br/>Sydney]
+        end
+        
+        subgraph "Emerging Markets"
+            X[🇧🇷 Brazil Edge<br/>São Paulo]
+            Y[🇮🇳 India Edge<br/>Mumbai]
+            Z[🇿🇦 South Africa Edge<br/>Cape Town]
+        end
+    end
+    
+    subgraph "End User Devices"
+        AA[📱 Mobile Apps<br/>iOS/Android]
+        BB[🌐 Web Browsers<br/>Progressive Web App]
+        CC[📺 Smart TVs<br/>Native Apps]
+        DD[🎮 Gaming Consoles<br/>Streaming Apps]
+        EE[💻 Desktop Apps<br/>High-quality Streams]
+    end
+    
+    subgraph "Intelligent Routing"
+        FF[🧠 ML-based Routing<br/>Performance Optimization]
+        GG[📊 Real-time Analytics<br/>Viewer Metrics]
+        HH[🎯 Geographic Routing<br/>Latency Minimization]
+    end
+    
+    %% Production to cloud
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    
+    %% Processing pipeline
+    E --> F
+    F --> G
+    F --> H
+    H --> I
+    I --> J
+    J --> K
+    
+    %% Distribution
+    K --> L
+    L --> M
+    M --> N
+    
+    %% Global edge distribution
+    N --> O
+    N --> P
+    N --> Q
+    N --> R
+    N --> S
+    N --> T
+    N --> U
+    N --> V
+    N --> W
+    N --> X
+    N --> Y
+    N --> Z
+    
+    %% Edge to users
+    O --> AA
+    P --> BB
+    Q --> CC
+    R --> DD
+    S --> EE
+    T --> AA
+    U --> BB
+    V --> CC
+    W --> DD
+    X --> EE
+    Y --> AA
+    Z --> BB
+    
+    %% Intelligent routing
+    FF --> N
+    GG --> FF
+    HH --> FF
+    
+    %% Analytics feedback
+    AA -.-> GG
+    BB -.-> GG
+    CC -.-> GG
+    DD -.-> GG
+    EE -.-> GG
+
+    style A fill:#e1f5fe
+    style E fill:#fff3e0
+    style L fill:#f3e5f5
+    style O fill:#e8f5e8
+    style AA fill:#e3f2fd
+    style FF fill:#fce4ec

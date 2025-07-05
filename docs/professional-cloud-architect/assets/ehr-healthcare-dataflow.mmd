@@ -1,0 +1,91 @@
+graph LR
+    subgraph "Data Sources"
+        A[👥 Patient Data]
+        B[🏥 Hospital Systems]
+        C[🏢 Insurance Claims]
+        D[📊 Legacy File Systems]
+    end
+    
+    subgraph "Data Ingestion"
+        E[🌐 API Gateway]
+        F[📁 File Upload]
+        G[🔄 Legacy Connectors]
+    end
+    
+    subgraph "Data Processing Pipeline"
+        H[🚀 Cloud Run<br/>Data Validation]
+        I[🔄 Cloud Dataflow<br/>ETL Processing]
+        J[⚡ Pub/Sub<br/>Event Streaming]
+    end
+    
+    subgraph "Data Storage"
+        K[💾 Cloud SQL<br/>Transactional Data]
+        L[📊 Cloud Firestore<br/>Document Store]
+        M[📦 Cloud Storage<br/>Raw Data Lake]
+    end
+    
+    subgraph "Analytics Layer"
+        N[📈 BigQuery<br/>Data Warehouse]
+        O[🔄 Cloud Dataflow<br/>Analytics Pipeline]
+        P[🤖 Vertex AI<br/>ML Models]
+    end
+    
+    subgraph "Insights & Reporting"
+        Q[📊 Healthcare Insights]
+        R[📈 Trend Reports]
+        S[🔮 Predictive Analytics]
+        T[🎯 Insurance Partner APIs]
+    end
+    
+    subgraph "Real-time Processing"
+        U[⚡ Memorystore Redis]
+        V[📱 Real-time Dashboard]
+        W[🚨 Alert System]
+    end
+    
+    %% Data ingestion flow
+    A --> E
+    B --> E
+    C --> F
+    D --> G
+    
+    %% Processing flow
+    E --> H
+    F --> H
+    G --> H
+    H --> I
+    H --> J
+    
+    %% Storage flow
+    I --> K
+    I --> L
+    I --> M
+    J --> U
+    
+    %% Analytics flow
+    K --> N
+    L --> N
+    M --> N
+    N --> O
+    O --> P
+    
+    %% Output flow
+    P --> Q
+    O --> R
+    P --> S
+    E --> T
+    
+    %% Real-time flow
+    U --> V
+    J --> W
+    
+    %% Feedback loops
+    S -.-> W
+    Q -.-> T
+
+    style A fill:#e1f5fe
+    style B fill:#e8f5e8
+    style C fill:#fff3e0
+    style N fill:#e3f2fd
+    style P fill:#f1f8e9
+    style V fill:#fce4ec

@@ -1,0 +1,34 @@
+{
+  "theme": "default",
+  "fontFamily": "Helvetica, Arial, sans-serif",
+  "fontSize": 16,
+  "primaryColor": "#fff3e0",
+  "primaryTextColor": "#000000",
+  "primaryBorderColor": "#1976d2",
+  "lineColor": "#424242",
+  "secondaryColor": "#e3f2fd",
+  "tertiaryColor": "#f1f8e9",
+  "background": "#ffffff",
+  "mainBkg": "#ffffff",
+  "secondBkg": "#e8f5e8",
+  "tertiaryTextColor": "#000000",
+  "flowchart": {
+    "nodeSpacing": 50,
+    "rankSpacing": 50,
+    "curve": "basis"
+  },
+  "sequence": {
+    "actorMargin": 50,
+    "width": 150,
+    "height": 65,
+    "boxMargin": 10,
+    "boxTextMargin": 5,
+    "noteMargin": 10,
+    "messageMargin": 35
+  },
+  "gantt": {
+    "numberSectionStyles": 4,
+    "axisFormat": "%m/%d/%Y",
+    "topAxis": true
+  }
+}

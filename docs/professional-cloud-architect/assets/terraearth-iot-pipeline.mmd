@@ -1,0 +1,120 @@
+graph LR
+    subgraph "Vehicle Sensors & Data Collection"
+        A[🌡️ Temperature Sensors<br/>Engine, Hydraulics]
+        B[🔧 Pressure Sensors<br/>Oil, Air, Hydraulic]
+        C[📳 Vibration Sensors<br/>Engine, Drivetrain]
+        D[📍 GPS Location<br/>Position, Speed]
+        E[⚙️ Engine Diagnostics<br/>RPM, Load, Fuel]
+        F[🕐 Operational Data<br/>Hours, Usage Patterns]
+    end
+    
+    subgraph "Vehicle Data Processing Unit"
+        G[💾 Local Data Buffer<br/>Edge Storage]
+        H[🔄 Data Compression<br/>Bandwidth Optimization]
+        I[📱 Cellular/WiFi Gateway<br/>Connectivity]
+        J[🚨 Critical Alert System<br/>Real-time Monitoring]
+    end
+    
+    subgraph "Real-time Data Stream"
+        K[⚡ Cloud Pub/Sub Topic<br/>Telemetry-realtime]
+        L[🔄 Cloud Dataflow<br/>Stream Processing]
+        M[🚨 Anomaly Detection<br/>Real-time Alerts]
+        N[⚡ Memorystore Redis<br/>Live Dashboard Cache]
+    end
+    
+    subgraph "Batch Data Upload"
+        O[📤 Daily Upload<br/>200-500MB per vehicle]
+        P[📦 Cloud Storage<br/>Raw Data Staging]
+        Q[🔄 Cloud Dataflow<br/>Batch Processing]
+        R[🧹 Data Cleansing<br/>Quality Validation]
+    end
+    
+    subgraph "Time-series Storage"
+        S[📊 Cloud Bigtable<br/>High-frequency Data<br/>Millisecond Access]
+        T[📈 BigQuery<br/>Analytics Warehouse<br/>Partitioned by Date]
+        U[❄️ Cloud Storage<br/>Long-term Archive<br/>Nearline/Coldline]
+    end
+    
+    subgraph "ML Feature Engineering"
+        V[🧮 Feature Extraction<br/>Statistical Aggregations]
+        W[📊 Feature Store<br/>Vertex AI Feature Store]
+        X[🔄 Feature Pipeline<br/>Automated Processing]
+        Y[📈 Model Training Data<br/>Historical Patterns]
+    end
+    
+    subgraph "Predictive Analytics"
+        Z[🤖 Failure Prediction<br/>Component Lifespan]
+        AA[🔧 Maintenance Scheduling<br/>Optimal Timing]
+        BB[📦 Parts Forecasting<br/>Inventory Optimization]
+        CC[⚡ Real-time Scoring<br/>Live Predictions]
+    end
+    
+    subgraph "Alert & Action Systems"
+        DD[🚨 Critical Alerts<br/>Immediate Action Required]
+        EE[📧 Maintenance Notifications<br/>Scheduled Service]
+        FF[📱 Mobile Alerts<br/>Field Technicians]
+        GG[📊 Dashboard Updates<br/>Fleet Managers]
+    end
+    
+    %% Sensor data collection
+    A --> G
+    B --> G
+    C --> G
+    D --> G
+    E --> G
+    F --> G
+    
+    %% Local processing
+    G --> H
+    H --> I
+    G --> J
+    
+    %% Real-time stream
+    I --> K
+    J --> K
+    K --> L
+    L --> M
+    L --> N
+    
+    %% Batch processing
+    I --> O
+    O --> P
+    P --> Q
+    Q --> R
+    
+    %% Data storage
+    L --> S
+    R --> T
+    T --> U
+    N --> S
+    
+    %% Feature engineering
+    S --> V
+    T --> V
+    V --> W
+    W --> X
+    X --> Y
+    
+    %% ML predictions
+    Y --> Z
+    Y --> AA
+    Y --> BB
+    W --> CC
+    
+    %% Alerts and actions
+    M --> DD
+    Z --> EE
+    AA --> FF
+    CC --> GG
+    
+    %% Feedback loops
+    DD -.-> J
+    EE -.-> V
+    BB -.-> Q
+
+    style A fill:#e1f5fe
+    style K fill:#fff3e0
+    style S fill:#e8f5e8
+    style Z fill:#f3e5f5
+    style DD fill:#ffebee
+    style W fill:#e3f2fd

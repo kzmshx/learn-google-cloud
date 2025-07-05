@@ -1,0 +1,100 @@
+graph LR
+    subgraph "Data Sources"
+        A[🚁 Helicopter Telemetry<br/>• GPS Position<br/>• Speed & Altitude<br/>• Engine Metrics]
+        B[🌤️ Weather Data<br/>• Wind Speed<br/>• Temperature<br/>• Visibility]
+        C[🏁 Track Conditions<br/>• Surface Quality<br/>• Obstacles<br/>• Safety Zones]
+        D[📊 Historical Data<br/>• Past Race Results<br/>• Pilot Performance<br/>• Machine Failures]
+        E[👥 Audience Data<br/>• Social Media<br/>• Chat Messages<br/>• Viewing Patterns]
+    end
+    
+    subgraph "Real-time Ingestion"
+        F[⚡ Cloud Pub/Sub<br/>High-throughput Messaging]
+        G[📡 IoT Core<br/>Device Management]
+        H[🌐 API Gateway<br/>External Data APIs]
+    end
+    
+    subgraph "Stream Processing"
+        I[🔄 Cloud Dataflow<br/>Apache Beam Pipeline]
+        J[🧮 Feature Engineering<br/>• Window Aggregations<br/>• Statistical Calculations<br/>• Pattern Recognition]
+        K[⚡ Memorystore Redis<br/>Real-time Cache]
+    end
+    
+    subgraph "AI/ML Engine"
+        L[🤖 Vertex AI Models<br/>Race Outcome Prediction]
+        M[🔧 Machine Failure Model<br/>Anomaly Detection]
+        N[😊 Sentiment Analysis<br/>Audience Emotion]
+        O[🎯 Recommendation Engine<br/>Content Optimization]
+    end
+    
+    subgraph "Real-time Outputs"
+        P[📱 Live Predictions<br/>Mobile/Web Apps]
+        Q[📺 Broadcast Overlay<br/>TV Integration]
+        R[🚨 Alert System<br/>Safety Notifications]
+        S[🎪 Dynamic Content<br/>Personalized Experience]
+    end
+    
+    subgraph "Feedback & Learning"
+        T[📈 Model Performance<br/>Monitoring]
+        U[🔄 Continuous Learning<br/>Model Retraining]
+        V[📊 A/B Testing<br/>Prediction Accuracy]
+    end
+    
+    subgraph "Storage & Analytics"
+        W[📊 Cloud Bigtable<br/>Time-series Storage]
+        X[📈 BigQuery<br/>Analytics Warehouse]
+        Y[🧠 Feature Store<br/>ML Feature Management]
+    end
+    
+    %% Data ingestion flow
+    A --> F
+    B --> H
+    C --> H
+    D --> X
+    E --> F
+    A --> G
+    
+    %% Processing flow
+    F --> I
+    G --> I
+    H --> I
+    I --> J
+    J --> K
+    
+    %% AI/ML predictions
+    K --> L
+    K --> M
+    F --> N
+    L --> O
+    
+    %% Output delivery
+    L --> P
+    L --> Q
+    M --> R
+    O --> S
+    N --> S
+    
+    %% Storage
+    I --> W
+    W --> X
+    J --> Y
+    
+    %% Feedback loops
+    P --> T
+    Q --> T
+    T --> U
+    U --> L
+    U --> M
+    X --> V
+    V --> L
+    
+    %% Real-time cache updates
+    L -.-> K
+    M -.-> K
+    N -.-> K
+
+    style A fill:#e1f5fe
+    style F fill:#fff3e0
+    style L fill:#e8f5e8
+    style P fill:#f3e5f5
+    style W fill:#e3f2fd
+    style U fill:#fce4ec

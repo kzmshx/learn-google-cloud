@@ -1,0 +1,117 @@
+graph TB
+    subgraph "Internet"
+        Users[👥 End Users]
+        Partners[🤝 Insurance Partners]
+    end
+    
+    subgraph "Google Cloud - Production VPC"
+        subgraph "Public Subnet (DMZ)"
+            LB[🌐 Global Load Balancer]
+            WAF[🛡️ Cloud Armor WAF]
+        end
+        
+        subgraph "Private Subnet - App Tier"
+            GKE1[⚙️ GKE Node Pool 1<br/>Web Apps]
+            GKE2[⚙️ GKE Node Pool 2<br/>API Services]
+            CloudRun[🚀 Cloud Run<br/>Microservices]
+        end
+        
+        subgraph "Private Subnet - Data Tier"
+            SQL1[💾 Cloud SQL Primary<br/>us-central1]
+            SQL2[💾 Cloud SQL Replica<br/>us-east1]
+            Redis[⚡ Memorystore Redis<br/>HA Cluster]
+        end
+        
+        subgraph "Management Subnet"
+            Bastion[🖥️ Bastion Host]
+            Monitoring[📊 Monitoring VMs]
+        end
+    end
+    
+    subgraph "Google Cloud - Development VPC"
+        DevGKE[⚙️ Dev GKE Cluster]
+        DevSQL[💾 Dev Cloud SQL]
+        DevStorage[📦 Dev Storage]
+    end
+    
+    subgraph "On-Premises Data Center"
+        subgraph "DMZ"
+            OnPremLB[🌐 On-Prem Load Balancer]
+            Firewall[🛡️ Firewall]
+        end
+        
+        subgraph "Legacy Systems"
+            AD[🏛️ Active Directory]
+            LegacyDB[💾 Legacy Databases<br/>MySQL/SQL Server]
+            FileServers[📁 File Servers]
+        end
+    end
+    
+    subgraph "Network Connections"
+        Interconnect[🔗 Cloud Interconnect<br/>10 Gbps Dedicated]
+        VPN1[🛡️ HA VPN Tunnel 1]
+        VPN2[🛡️ HA VPN Tunnel 2]
+    end
+    
+    subgraph "Security & Compliance"
+        IAM[🔐 Cloud IAM]
+        VPCFlowLogs[📊 VPC Flow Logs]
+        KMS[🔑 Cloud KMS]
+        SecretMgr[🔒 Secret Manager]
+    end
+    
+    %% Internet connections
+    Users --> LB
+    Partners --> LB
+    
+    %% DMZ flow
+    LB --> WAF
+    WAF --> GKE1
+    WAF --> GKE2
+    WAF --> CloudRun
+    
+    %% Internal app connections
+    GKE1 --> SQL1
+    GKE2 --> SQL1
+    CloudRun --> SQL1
+    GKE1 --> Redis
+    GKE2 --> Redis
+    
+    %% Database replication
+    SQL1 -.-> SQL2
+    
+    %% Hybrid connectivity
+    OnPremLB --> Firewall
+    Firewall --> Interconnect
+    Interconnect --> CloudRun
+    AD --> VPN1
+    LegacyDB --> VPN1
+    FileServers --> VPN2
+    VPN1 --> CloudRun
+    VPN2 --> CloudRun
+    
+    %% Management access
+    Bastion --> GKE1
+    Bastion --> GKE2
+    Bastion --> SQL1
+    
+    %% VPC Peering for Dev
+    GKE1 -.-> DevGKE
+    SQL1 -.-> DevSQL
+    
+    %% Security enforcement
+    IAM -.-> GKE1
+    IAM -.-> GKE2
+    IAM -.-> SQL1
+    KMS -.-> SQL1
+    KMS -.-> Redis
+    SecretMgr -.-> CloudRun
+    VPCFlowLogs -.-> GKE1
+
+    style Users fill:#e1f5fe
+    style Partners fill:#f3e5f5
+    style LB fill:#fff3e0
+    style GKE1 fill:#ffebee
+    style SQL1 fill:#e8f5e8
+    style Interconnect fill:#fce4ec
+    style AD fill:#e0f2f1

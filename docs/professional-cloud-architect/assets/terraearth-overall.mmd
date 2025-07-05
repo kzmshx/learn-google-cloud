@@ -1,0 +1,136 @@
+graph TB
+    subgraph "Global Fleet - 2M Vehicles"
+        A[🚜 Mining Equipment<br/>Excavators, Dump Trucks]
+        B[🌾 Agricultural Vehicles<br/>Tractors, Harvesters]
+        C[🏗️ Construction Equipment<br/>Bulldozers, Cranes]
+        D[📡 Vehicle Sensors<br/>200-500MB/day per vehicle]
+    end
+    
+    subgraph "On-Premises Infrastructure"
+        E[🏭 Manufacturing Plant 1<br/>North America]
+        F[🏭 Manufacturing Plant 2<br/>Europe]
+        G[🏛️ Private Data Center<br/>Legacy Systems]
+        H[📦 Inventory Management<br/>Parts & Logistics]
+        I[🔧 Maintenance Systems<br/>Service History]
+    end
+    
+    subgraph "Hybrid Connectivity"
+        J[🔗 Cloud Interconnect<br/>Dedicated 10Gbps]
+        K[🛡️ Cloud VPN<br/>Backup Connection]
+        L[🌐 API Gateway<br/>Legacy Integration]
+    end
+    
+    subgraph "Google Cloud - Data Platform"
+        subgraph "IoT Data Ingestion"
+            M[📡 IoT Device SDK<br/>Vehicle Connectivity]
+            N[⚡ Cloud Pub/Sub<br/>Telemetry Streaming]
+            O[🔄 Cloud Dataflow<br/>Data Processing]
+        end
+        
+        subgraph "Data Storage & Analytics"
+            P[📊 Cloud Bigtable<br/>Time-series Data]
+            Q[📈 BigQuery<br/>Analytics Warehouse]
+            R[📦 Cloud Storage<br/>Data Lake Archive]
+        end
+        
+        subgraph "AI/ML Platform"
+            S[🤖 Vertex AI<br/>Predictive Maintenance]
+            T[🧠 AutoML<br/>Failure Prediction]
+            U[📊 Feature Store<br/>ML Feature Management]
+        end
+        
+        subgraph "API & Developer Platform"
+            V[🚪 API Gateway<br/>Partner Integration]
+            W[🚀 Cloud Run<br/>Microservices]
+            X[📚 Developer Portal<br/>Self-service APIs]
+        end
+    end
+    
+    subgraph "Partner Ecosystem"
+        Y[🤝 Dealer Network<br/>500+ Dealers Worldwide]
+        Z[🔧 Service Partners<br/>Maintenance Providers]
+        AA[📱 Third-party Apps<br/>Fleet Management]
+        BB[📊 Analytics Partners<br/>Business Intelligence]
+    end
+    
+    subgraph "End Users & Applications"
+        CC[👥 Fleet Managers<br/>Operations Dashboard]
+        DD[🔧 Service Technicians<br/>Mobile Apps]
+        EE[📱 Equipment Operators<br/>In-vehicle Displays]
+        FF[💼 Business Analysts<br/>Reporting Tools]
+    end
+    
+    subgraph "Advanced Analytics"
+        GG[🔮 Predictive Maintenance<br/>Failure Forecasting]
+        HH[📈 Performance Analytics<br/>Efficiency Optimization]
+        II[📦 Parts Optimization<br/>Inventory Management]
+        JJ[🌍 Fleet Insights<br/>Usage Patterns]
+    end
+    
+    %% Vehicle data flow
+    A --> D
+    B --> D
+    C --> D
+    D --> M
+    
+    %% Connectivity
+    M --> N
+    E --> J
+    F --> J
+    G --> K
+    J --> L
+    K --> L
+    
+    %% Data processing
+    N --> O
+    O --> P
+    O --> Q
+    O --> R
+    
+    %% ML/AI processing
+    Q --> S
+    P --> T
+    S --> U
+    T --> U
+    
+    %% API platform
+    L --> V
+    V --> W
+    W --> X
+    U --> W
+    
+    %% Partner integration
+    V --> Y
+    V --> Z
+    X --> AA
+    X --> BB
+    
+    %% End user access
+    W --> CC
+    W --> DD
+    W --> EE
+    Q --> FF
+    
+    %% Analytics outputs
+    S --> GG
+    T --> HH
+    U --> II
+    Q --> JJ
+    
+    %% Legacy integration
+    H --> L
+    I --> L
+    L --> W
+    
+    %% Feedback loops
+    GG -.-> H
+    HH -.-> I
+    II -.-> H
+    JJ -.-> W
+
+    style A fill:#e1f5fe
+    style M fill:#fff3e0
+    style S fill:#e8f5e8
+    style V fill:#f3e5f5
+    style Y fill:#e3f2fd
+    style GG fill:#fce4ec

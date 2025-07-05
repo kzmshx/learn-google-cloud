@@ -1,0 +1,121 @@
+graph TB
+    subgraph "Global Viewers"
+        Viewers[👥 Global Viewers<br/>Millions Concurrent]
+        Mobile[📱 Mobile Apps]
+        Web[🌐 Web Browsers]
+        TV[📺 Smart TV Apps]
+    end
+    
+    subgraph "Racing Venues"
+        RaceTrack[🏁 Race Track<br/>Mobile Data Center]
+        Sensors[📡 Helicopter Sensors<br/>Telemetry Data]
+        Cameras[📹 Racing Cameras<br/>Live Video Feed]
+    end
+    
+    subgraph "Partner Ecosystem"
+        Partners[🤝 Prediction Partners]
+        Advertisers[📢 Advertisers]
+        Broadcasters[📺 Broadcasting Partners]
+    end
+    
+    subgraph "Google Cloud - Global Infrastructure"
+        subgraph "Edge/CDN Layer"
+            CDN[🌐 Cloud CDN<br/>Global Distribution]
+            EdgePOP[📍 Edge Points of Presence<br/>150+ Locations]
+        end
+        
+        subgraph "Media Processing"
+            Transcoder[🎬 Transcoder API<br/>Multi-format Encoding]
+            Storage[📦 Cloud Storage<br/>Multi-regional Buckets]
+            MediaCDN[📡 Media CDN<br/>Adaptive Streaming]
+        end
+        
+        subgraph "Real-time Data Pipeline"
+            PubSub[⚡ Cloud Pub/Sub<br/>Global Messaging]
+            Dataflow[🔄 Cloud Dataflow<br/>Stream Processing]
+            Bigtable[📊 Cloud Bigtable<br/>Time-series Data]
+        end
+        
+        subgraph "AI/ML Prediction Engine"
+            VertexAI[🤖 Vertex AI<br/>Prediction Models]
+            TPU[🧠 Cloud TPU<br/>Model Training]
+            AutoML[🎯 AutoML<br/>Custom Models]
+        end
+        
+        subgraph "API & Services Layer"
+            APIGateway[🚪 API Gateway<br/>Partner APIs]
+            CloudRun[🚀 Cloud Run<br/>Microservices]
+            FirebaseRTDB[🔥 Firebase RTDB<br/>Real-time Features]
+        end
+        
+        subgraph "Analytics & Insights"
+            BigQuery[📈 BigQuery<br/>Analytics Warehouse]
+            Looker[📊 Looker<br/>Business Intelligence]
+            DataStudio[📋 Data Studio<br/>Dashboards]
+        end
+        
+        subgraph "Global Load Balancing"
+            GlobalLB[🌍 Global Load Balancer<br/>Multi-region Routing]
+            RegionalLB[🗺️ Regional Load Balancers<br/>Auto-scaling]
+        end
+    end
+    
+    %% Viewer connections
+    Viewers --> GlobalLB
+    Mobile --> CDN
+    Web --> CDN
+    TV --> MediaCDN
+    
+    %% Global distribution
+    GlobalLB --> RegionalLB
+    RegionalLB --> CDN
+    CDN --> EdgePOP
+    EdgePOP --> Viewers
+    
+    %% Race track data flow
+    Sensors --> PubSub
+    Cameras --> Transcoder
+    RaceTrack --> PubSub
+    
+    %% Media processing flow
+    Transcoder --> Storage
+    Storage --> MediaCDN
+    MediaCDN --> CDN
+    
+    %% Real-time data processing
+    PubSub --> Dataflow
+    Dataflow --> Bigtable
+    Dataflow --> VertexAI
+    Bigtable --> BigQuery
+    
+    %% AI/ML predictions
+    VertexAI --> CloudRun
+    TPU --> VertexAI
+    AutoML --> VertexAI
+    CloudRun --> FirebaseRTDB
+    
+    %% Partner integrations
+    Partners --> APIGateway
+    Advertisers --> APIGateway
+    Broadcasters --> APIGateway
+    APIGateway --> CloudRun
+    
+    %% Analytics flow
+    Bigtable --> BigQuery
+    BigQuery --> Looker
+    BigQuery --> DataStudio
+    
+    %% Real-time features
+    FirebaseRTDB --> Mobile
+    FirebaseRTDB --> Web
+    
+    %% Feedback loops
+    BigQuery -.-> VertexAI
+    DataStudio -.-> CloudRun
+
+    style Viewers fill:#e1f5fe
+    style RaceTrack fill:#fff3e0
+    style CDN fill:#f3e5f5
+    style VertexAI fill:#e8f5e8
+    style BigQuery fill:#e3f2fd
+    style FirebaseRTDB fill:#fce4ec

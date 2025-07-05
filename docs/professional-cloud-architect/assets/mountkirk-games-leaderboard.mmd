@@ -1,0 +1,97 @@
+graph LR
+    subgraph "Game Sessions"
+        A[🎮 Player A<br/>North America]
+        B[🎮 Player B<br/>Europe]
+        C[🎮 Player C<br/>Asia]
+        D[🎮 Player D<br/>Americas]
+        E[🎮 Player E<br/>APAC]
+    end
+    
+    subgraph "Regional Game Servers"
+        F[🏰 NA Game Arena<br/>us-central1]
+        G[🏰 EU Game Arena<br/>europe-west1]
+        H[🏰 APAC Game Arena<br/>asia-northeast1]
+    end
+    
+    subgraph "Event Processing Pipeline"
+        I[⚡ Cloud Pub/Sub<br/>Game Events Topic]
+        J[🔄 Cloud Dataflow<br/>Score Processing]
+        K[🧮 Score Aggregation<br/>Windowed Functions]
+    end
+    
+    subgraph "Global Database Layer"
+        L[🌐 Cloud Spanner<br/>Global Leaderboard<br/>Multi-region Instance]
+        M[⚡ Memorystore Redis<br/>Leaderboard Cache<br/>Sub-second Access]
+        N[🔥 Cloud Firestore<br/>Player Achievements<br/>Real-time Updates]
+    end
+    
+    subgraph "Real-time Distribution"
+        O[🚀 Cloud Run<br/>Leaderboard API]
+        P[🔥 Firebase RTDB<br/>Real-time Sync]
+        Q[🌐 WebSocket Connections<br/>Live Updates]
+    end
+    
+    subgraph "Client Applications"
+        R[📱 Mobile Apps<br/>Live Leaderboard]
+        S[💻 PC Games<br/>In-game Display]
+        T[🌐 Web Dashboard<br/>Spectator View]
+        U[📺 Arena Displays<br/>Big Screens]
+    end
+    
+    subgraph "Analytics & Insights"
+        V[📈 BigQuery<br/>Historical Analysis]
+        W[📊 Data Studio<br/>Analytics Dashboard]
+        X[🤖 Vertex AI<br/>Performance Prediction]
+    end
+    
+    %% Game events flow
+    A --> F
+    B --> G
+    C --> H
+    D --> F
+    E --> H
+    
+    %% Event processing
+    F --> I
+    G --> I
+    H --> I
+    I --> J
+    J --> K
+    
+    %% Data storage
+    K --> L
+    L --> M
+    K --> N
+    
+    %% API layer
+    M --> O
+    N --> P
+    O --> Q
+    
+    %% Client updates
+    Q --> R
+    Q --> S
+    P --> T
+    O --> U
+    
+    %% Analytics
+    L --> V
+    V --> W
+    V --> X
+    
+    %% Real-time cache updates
+    L -.-> M
+    N -.-> P
+    
+    %% Cross-region replication
+    L -.-> L
+    
+    %% Performance feedback
+    X -.-> K
+
+    style A fill:#e1f5fe
+    style I fill:#fff3e0
+    style L fill:#e8f5e8
+    style M fill:#f3e5f5
+    style R fill:#e3f2fd
+    style V fill:#fce4ec

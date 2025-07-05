@@ -1,0 +1,147 @@
+graph TB
+    subgraph "External Developers & Partners"
+        A[👨‍💻 Internal Developers<br/>TerramEarth Teams]
+        B[🤝 Partner Developers<br/>Third-party Integrators]
+        C[🏢 Enterprise Customers<br/>Fleet Management Teams]
+        D[🔧 Service Providers<br/>Maintenance Companies]
+    end
+    
+    subgraph "Developer Portal & Self-Service"
+        E[🌐 Developer Portal<br/>Documentation & Onboarding]
+        F[🔑 API Key Management<br/>Self-service Provisioning]
+        G[📊 Usage Analytics<br/>API Consumption Metrics]
+        H[💬 Developer Community<br/>Forums & Support]
+        I[📚 SDK Downloads<br/>Multiple Languages]
+    end
+    
+    subgraph "API Gateway & Management"
+        J[🚪 API Gateway<br/>Unified Entry Point]
+        K[🛡️ Authentication & Authorization<br/>OAuth 2.0 / JWT]
+        L[📊 Rate Limiting & Quotas<br/>Fair Usage Policies]
+        M[📈 API Analytics<br/>Performance Monitoring]
+        N[🔄 API Versioning<br/>Backward Compatibility]
+    end
+    
+    subgraph "Microservices Architecture"
+        O[🚀 Vehicle Data API<br/>Telemetry Access]
+        P[🔮 Prediction API<br/>Maintenance Forecasts]
+        Q[📦 Parts API<br/>Inventory & Ordering]
+        R[🔧 Service API<br/>Maintenance Records]
+        S[📍 Location API<br/>Fleet Tracking]
+        T[📊 Analytics API<br/>Performance Insights]
+    end
+    
+    subgraph "Data Access Layer"
+        U[📊 BigQuery<br/>Historical Analytics]
+        V[📈 Bigtable<br/>Real-time Data]
+        W[🤖 Vertex AI<br/>ML Predictions]
+        X[📦 Cloud Storage<br/>Raw Data Access]
+        Y[⚡ Memorystore<br/>Cached Responses]
+    end
+    
+    subgraph "Legacy System Integration"
+        Z[🏛️ Legacy Database APIs<br/>Inventory Systems]
+        AA[📁 File System APIs<br/>Historical Records]
+        BB[🔧 ERP Integration<br/>Enterprise Systems]
+        CC[🌉 Legacy Bridge APIs<br/>System Abstraction]
+    end
+    
+    subgraph "CI/CD & Infrastructure"
+        DD[🔨 Cloud Build<br/>API Deployment Pipeline]
+        EE[📦 Artifact Registry<br/>Container Images]
+        FF[⚙️ GKE Autopilot<br/>Service Orchestration]
+        GG[🚀 Cloud Deploy<br/>Automated Deployment]
+        HH[📝 Infrastructure as Code<br/>Terraform Templates]
+    end
+    
+    subgraph "Monitoring & Observability"
+        II[📊 Cloud Monitoring<br/>API Performance]
+        JJ[📝 Cloud Logging<br/>Request Logging]
+        KK[🚨 Alert Manager<br/>SLA Monitoring]
+        LL[📈 Custom Dashboards<br/>Business Metrics]
+    end
+    
+    subgraph "Security & Compliance"
+        MM[🔐 Cloud IAM<br/>Access Control]
+        NN[🔒 Secret Manager<br/>API Credentials]
+        OO[🔑 Cloud KMS<br/>Data Encryption]
+        PP[🛡️ Cloud Armor<br/>DDoS Protection]
+    end
+    
+    %% Developer access
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    
+    %% Portal services
+    E --> F
+    E --> G
+    E --> H
+    E --> I
+    
+    %% API Gateway flow
+    F --> J
+    J --> K
+    K --> L
+    L --> M
+    M --> N
+    
+    %% Microservices
+    N --> O
+    N --> P
+    N --> Q
+    N --> R
+    N --> S
+    N --> T
+    
+    %% Data access
+    O --> V
+    P --> W
+    Q --> U
+    R --> X
+    S --> Y
+    T --> U
+    
+    %% Legacy integration
+    Q --> Z
+    R --> AA
+    T --> BB
+    Z --> CC
+    AA --> CC
+    BB --> CC
+    
+    %% CI/CD pipeline
+    DD --> EE
+    EE --> FF
+    FF --> GG
+    GG --> O
+    GG --> P
+    GG --> Q
+    HH --> FF
+    
+    %% Monitoring
+    II --> O
+    II --> P
+    II --> Q
+    JJ --> J
+    KK --> II
+    LL --> G
+    
+    %% Security
+    MM --> K
+    NN --> O
+    OO --> U
+    PP --> J
+    
+    %% Analytics feedback
+    G -.-> L
+    M -.-> LL
+    LL -.-> E
+
+    style A fill:#e1f5fe
+    style E fill:#fff3e0
+    style J fill:#e8f5e8
+    style O fill:#f3e5f5
+    style U fill:#e3f2fd
+    style II fill:#fce4ec
