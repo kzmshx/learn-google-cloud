@@ -7,14 +7,13 @@ set -eux
 # --------------------------------
 while [[ $# -gt 0 ]]; do
   case $1 in
-  --region)
-    REGION="$2"
-    shift 2
-    ;;
+  --region) REGION="$2" && shift 2 ;;
   --* | -*) echo "Unknown option: $1" >&2 && exit 1 ;;
   *) break ;;
   esac
 done
+
+echo "REGION: $REGION"
 
 # --------------------------------
 # Set up environment
