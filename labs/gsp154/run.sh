@@ -34,7 +34,6 @@ TOKEN=$(gcloud auth print-access-token)
 # --------------------------------
 # Call Video Intelligence API
 # --------------------------------
-
 cat >request.json <<EOF
 {
   "inputUri": "gs://spls/gsp154/video/train.mp4",
