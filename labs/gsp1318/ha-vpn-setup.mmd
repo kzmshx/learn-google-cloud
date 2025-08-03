@@ -1,0 +1,61 @@
+graph TB
+    subgraph "Google Cloud Platform"
+        subgraph "Routing VPC"
+            RV[Routing VPC Network<br/>routing-vpc]
+            RVR[Cloud Router<br/>routing-vpc-cr<br/>ASN: 64525]
+            RVGW[VPN Gateway<br/>routing-vpc-vpn-gateway]
+            RVT[VPN Tunnel<br/>routing-vpc-tunnel<br/>Interface 0]
+            RVI[Router Interface<br/>if-hub-to-prem<br/>169.254.1.1/30]
+            RVBGP[BGP Peer<br/>bgp-hub-to-prem<br/>Peer: 169.254.1.2<br/>ASN: 64526]
+        end
+
+        subgraph "Spoke VPC"
+            SV[Spoke VPC Network<br/>10.0.1.0/24]
+        end
+    end
+
+    subgraph "On-Premises Network"
+        OPV[On-Prem VPC Network<br/>on-prem-net-vpc]
+        OPR[Cloud Router<br/>on-prem-router<br/>ASN: 64526]
+        OPGW[VPN Gateway<br/>on-prem-vpn-gateway]
+        OPT[VPN Tunnel<br/>on-prem-tunnel<br/>Interface 0]
+        OPI[Router Interface<br/>if-prem-to-hub<br/>169.254.1.2/30]
+        OPBGP[BGP Peer<br/>bgp-prem-to-hub<br/>Peer: 169.254.1.1<br/>ASN: 64525]
+    end
+
+    %% VPN接続
+    RVT -.->|Shared Secret Key| OPT
+    OPT -.->|Shared Secret Key| RVT
+
+    %% ルーターインターフェース接続
+    RVR --> RVI
+    RVI --> RVT
+    OPR --> OPI
+    OPI --> OPT
+
+    %% BGPピア接続
+    RVR --> RVBGP
+    RVBGP --> RVI
+    OPR --> OPBGP
+    OPBGP --> OPI
+
+    %% VPC接続
+    RV -.->|Advertises| SV
+    SV -.->|Routes via| RV
+
+    %% ルート広告
+    RVBGP -.->|Advertises 10.0.1.0/24| OPBGP
+    OPBGP -.->|Advertises On-Prem routes| RVBGP
+
+    %% スタイル
+    classDef vpc fill:#e1f5fe
+    classDef router fill:#fff3e0
+    classDef gateway fill:#f3e5f5
+    classDef tunnel fill:#e8f5e8
+    classDef bgp fill:#ffebee
+
+    class RV,OPV,SV vpc
+    class RVR,OPR router
+    class RVGW,OPGW gateway
+    class RVT,OPT tunnel
+    class RVBGP,OPBGP bgp

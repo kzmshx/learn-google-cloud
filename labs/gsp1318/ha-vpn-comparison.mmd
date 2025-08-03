@@ -1,0 +1,44 @@
+graph TB
+    subgraph "従来のVPN（単一接続）"
+        subgraph "On-Premises"
+            OP1[オンプレミス<br/>ネットワーク]
+        end
+
+        subgraph "GCP"
+            GCP1[GCP<br/>VPC]
+        end
+
+        OP1 ----|単一VPN接続<br/>障害時は完全停止| GCP1
+
+        subgraph "問題点"
+            P1[• 単一障害点<br/>• メンテナンス時ダウンタイム<br/>• 99%以下の可用性]
+        end
+    end
+
+    subgraph "HA VPN（冗長接続）"
+        subgraph "On-Premises"
+            OP2[オンプレミス<br/>ネットワーク]
+        end
+
+        subgraph "GCP"
+            GCP2[GCP<br/>VPC]
+        end
+
+        OP2 ----|VPN接続1<br/>Active| GCP2
+        OP2 ----|VPN接続2<br/>Active/Standby| GCP2
+
+        subgraph "利点"
+            A1[• 冗長性確保<br/>• 自動フェイルオーバー<br/>• 99.9%以上の可用性<br/>• 負荷分散可能]
+        end
+    end
+
+    %% スタイル
+    classDef traditional fill:#ffcdd2
+    classDef ha fill:#c8e6c9
+    classDef problem fill:#fff3e0
+    classDef advantage fill:#e8f5e8
+
+    class OP1,GCP1 traditional
+    class OP2,GCP2 ha
+    class P1 problem
+    class A1 advantage
