@@ -1,0 +1,63 @@
+graph TB
+    subgraph "HA VPN レベル分類"
+        subgraph "Level 1: 基本的なHA VPN"
+            L1A[On-Premises]
+            L1B[GCP Region A]
+            L1T1[VPN Tunnel<br/>Interface 0]
+
+            L1A --> L1T1
+            L1T1 --> L1B
+
+            subgraph "特徴"
+                L1F[• 双方向VPN Tunnel<br/>• Interface 0使用<br/>• 99.5%可用性]
+            end
+        end
+
+        subgraph "Level 2: 標準的なHA VPN"
+            L2A[On-Premises]
+            L2B[GCP Region A]
+            L2T1[VPN Tunnel<br/>Interface 0]
+            L2T2[VPN Tunnel<br/>Interface 1]
+
+            L2A --> L2T1
+            L2A --> L2T2
+            L2T1 --> L2B
+            L2T2 --> L2B
+
+            subgraph "特徴"
+                L2F[• Interface 0 + 1<br/>• 同一リージョン<br/>• 99.7%可用性]
+            end
+        end
+
+        subgraph "Level 3: 高可用性HA VPN"
+            L3A[On-Premises]
+            L3B1[GCP Region A]
+            L3B2[GCP Region B]
+            L3T1[VPN Tunnel<br/>Interface 0]
+            L3T2[VPN Tunnel<br/>Interface 1]
+
+            L3A --> L3T1
+            L3A --> L3T2
+            L3T1 --> L3B1
+            L3T2 --> L3B2
+
+            subgraph "特徴"
+                L3F[• 地理的分散<br/>• 最高冗長性<br/>• 99.9%可用性]
+            end
+        end
+    end
+
+    subgraph "先ほどのスクリプトの位置"
+        SCRIPT[先ほどのスクリプト<br/>Level 1相当<br/>双方向VPN Tunnel<br/>Interface 0のみ]
+    end
+
+    %% スタイル
+    classDef level1 fill:#e3f2fd
+    classDef level2 fill:#f3e5f5
+    classDef level3 fill:#e8f5e8
+    classDef script fill:#fff3e0
+
+    class L1A,L1B,L1T1,L1F level1
+    class L2A,L2B,L2T1,L2T2,L2F level2
+    class L3A,L3B1,L3B2,L3T1,L3T2,L3F level3
+    class SCRIPT script
