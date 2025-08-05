@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.cloudskillsboost.google)",
+      "Bash(chmod:*)"
+    ],
+    "deny": []
+  }
+}
