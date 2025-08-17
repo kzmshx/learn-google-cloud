@@ -3,25 +3,55 @@
 set -eux
 
 # --------------------------------
-# Parse args
+# Create topic
 # --------------------------------
-while [[ $# -gt 0 ]]; do
-  case $1 in
-  --region) REGION="$2" && shift 2 ;;
-  --zone) ZONE="$2" && shift 2 ;;
-  --* | -*) echo "unknown option: $1" >&2 && exit 1 ;;
-  *) break ;;
-  esac
-done
+TOPIC_1="myTopic"
+TOPIC_2="Test1"
+TOPIC_3="Test2"
 
-echo "region: $REGION"
-echo "zone: $ZONE"
+gcloud pubsub topics create $TOPIC_1
+gcloud pubsub topics create $TOPIC_2
+gcloud pubsub topics create $TOPIC_3
+
+gcloud pubsub topics list
+
+gcloud pubsub topics delete $TOPIC_2
+gcloud pubsub topics delete $TOPIC_3
+
+gcloud pubsub topics list
 
 # --------------------------------
-# Set up environment
+# Create subscription
 # --------------------------------
-PROJECT_ID=$(gcloud config get-value project)
-PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
+SUBSCRIPTION_1="mySubscription"
+SUBSCRIPTION_2="Test1"
+SUBSCRIPTION_3="Test2"
 
-gcloud config set compute/region $REGION
-gcloud config set compute/zone $ZONE
+gcloud pubsub subscriptions create --topic $TOPIC_1 $SUBSCRIPTION_1
+gcloud pubsub subscriptions create --topic $TOPIC_1 $SUBSCRIPTION_2
+gcloud pubsub subscriptions create --topic $TOPIC_1 $SUBSCRIPTION_3
+
+gcloud pubsub topics list-subscriptions $TOPIC_1
+
+gcloud pubsub subscriptions delete $SUBSCRIPTION_2
+gcloud pubsub subscriptions delete $SUBSCRIPTION_3
+
+gcloud pubsub topics list-subscriptions $TOPIC_1
+
+# --------------------------------
+# Create and pull messages
+# --------------------------------
+gcloud pubsub topics publish $TOPIC_1 --message "Hello"
+gcloud pubsub topics publish $TOPIC_1 --message "World"
+gcloud pubsub topics publish $TOPIC_1 --message "!!"
+
+gcloud pubsub subscriptions pull $SUBSCRIPTION_1 --auto-ack
+gcloud pubsub subscriptions pull $SUBSCRIPTION_1 --auto-ack
+gcloud pubsub subscriptions pull $SUBSCRIPTION_1 --auto-ack
+gcloud pubsub subscriptions pull $SUBSCRIPTION_1 --auto-ack
+
+gcloud pubsub topics publish $TOPIC_1 --message "Hello"
+gcloud pubsub topics publish $TOPIC_1 --message "World"
+gcloud pubsub topics publish $TOPIC_1 --message "!!"
+
+gcloud pubsub subscriptions pull $SUBSCRIPTION_1 --limit 3
