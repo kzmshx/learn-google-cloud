@@ -20,7 +20,7 @@ FROM
     FROM
       `data-to-insights.ecommerce.web_analytics`
     GROUP BY fullvisitorid
-    USING (fullVisitorId)
   )
+  USING (fullVisitorId)
 ORDER BY time_on_site DESC
 LIMIT 10;
