@@ -2,7 +2,7 @@
 SELECT
   SQRT(mean_squared_error) AS rmse
 FROM
-  ML.EVALUATE(MODEL taxi.taxifare_mode, (
+  ML.EVALUATE(MODEL taxi.taxifare_model, (
     WITH
       params AS (SELECT 1 AS TRAIN, 2 AS EVAL),
       daynames AS (SELECT ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'] AS daysofweek),

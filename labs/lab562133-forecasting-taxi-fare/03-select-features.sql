@@ -4,7 +4,7 @@ WITH
     SELECT 1 AS TRAIN, 2 AS EVAL
   ),
   daynames AS (
-    (SELECT ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']) AS daysofweek
+    (SELECT ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'] AS daysofweek)
   ),
   taxitrips AS (
     SELECT

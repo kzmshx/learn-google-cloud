@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bq mk taxi --location US
+bq mk --data_location US taxi
